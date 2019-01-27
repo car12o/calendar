@@ -1,0 +1,9 @@
+.vscode
+docker-compose.yaml
+node_modules
+
+# server
+calendar-server/dist
+calendar-server/config/default.json
+calendar-server/logs/*
+!calendar-server/logs/.gitkeep

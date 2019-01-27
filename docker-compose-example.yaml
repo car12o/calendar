@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+
+### CALENDAR-SERVER ##########################################
+
+  calendar-mongo:
+    image: mongo:4.1.7
+    container_name: calendar-mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ../_data/calendar-mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user_example
+      MONGO_INITDB_ROOT_PASSWORD: password_example
