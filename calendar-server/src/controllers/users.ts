@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import Event from "../models/event";
+import User from "../models/user";
 
-class EventsController {
+class UsersController {
     /**
      * get ...
      * @param req
@@ -12,7 +12,7 @@ class EventsController {
         const query = id ? { _id: id } : {};
 
         try {
-            const result = await Event.find(query);
+            const result = await User.find(query);
             return res.send(result);
         } catch (e) {
             global.log.error(e);
@@ -26,13 +26,12 @@ class EventsController {
      * @param res
      */
     public static async store(req: Request, res: Response) {
-        const { title, description } = req.body;
+        const { username, password } = req.body;
 
         try {
-            const result = await new Event({
-                date: new Date(),
-                description,
-                title,
+            const result = await new User({
+                password,
+                username,
             }).save();
 
             return res.send(result);
@@ -43,4 +42,4 @@ class EventsController {
     }
 }
 
-export default EventsController;
+export default UsersController;
