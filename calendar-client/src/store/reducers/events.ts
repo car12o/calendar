@@ -6,7 +6,7 @@ const events = (state = initialState, action: IAction) => {
 			if (action.status !== 200) {
 				return [];
 			}
-			return [];
+			return action.body;
 		default:
 			return state;
 	}

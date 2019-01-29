@@ -15,9 +15,11 @@ interface IEventProps {
     closeModal: Function;
     data: any;
     submit: Function;
+    delete: Function;
 }
 
-interface IEventState {
+interface IEvent {
+    _id: string;
     start: string;
     end: string;
     title: string;
@@ -33,13 +35,6 @@ interface IAction {
     events?: [IEvent];
     status?: number;
     body?: any;
-}
-
-interface IEvent {
-    start: string;
-    end: string;
-    title: string;
-    description: string;
 }
 
 interface IRequest {

@@ -10,6 +10,8 @@ const users = express.Router();
 events.get("", EventsController.get);
 events.get("/:id", EventsController.get);
 events.post("", EventsController.store);
+events.patch("/:id", EventsController.update);
+events.delete("/:id", EventsController.delete);
 
 // events ...
 users.get("", UsersController.get);

@@ -19,10 +19,11 @@ const customStyles = {
     }
 };
 
-class Event extends React.Component<IEventProps, IEventState> {
+class Event extends React.Component<IEventProps, IEvent> {
     constructor(props: any) {
         super(props);
         this.state = {
+            _id: '',
             start: '',
             end: '',
             title: '',
@@ -36,20 +37,43 @@ class Event extends React.Component<IEventProps, IEventState> {
             end: props.data.end || '',
             title: props.data.title || '',
             description: props.data.description || '',
+            _id: props.data._id || '',
         });
     }
 
-    beforeSubmit() {
+    beforeSubmit(type: string) {
         this.props.closeModal();
-        this.props.submit({
-            start: this.state.start,
-            end: this.state.end,
-            title: this.state.title,
-            description: this.state.description,
-        });
+        switch (type) {
+            case 'submit':
+                this.props.submit({
+                    _id: this.state._id,
+                    start: this.state.start,
+                    end: this.state.end,
+                    title: this.state.title,
+                    description: this.state.description,
+                });
+                break;
+            case 'delete':
+                this.props.delete(this.state._id);
+        }
     }
 
     public render() {
+        const button = this.state._id ?
+            (
+                <div>
+                    <Button className="ui primary button" onClick={() => this.beforeSubmit('submit')}>Submit</Button>
+                    <Button className="ui red button" onClick={() => this.beforeSubmit('delete')}>Delete</Button>
+                    <Button className="ui secondary button" onClick={() => this.props.closeModal()}>Cancel</Button>
+                </div>
+            ) :
+            (
+                <div>
+                    <Button className="ui primary button" onClick={() => this.beforeSubmit('submit')}>Submit</Button>
+                    <Button className="ui secondary button" onClick={() => this.props.closeModal()}>Cancel</Button>
+                </div>
+            )
+
         return (
             <Modal
                 isOpen={this.props.isOpen}
@@ -79,8 +103,7 @@ class Event extends React.Component<IEventProps, IEventState> {
                         onChange={(e: any) => this.setState({ description: e.target.value })} />
                 </div>
 
-                <Button className="ui primary button" onClick={() => this.beforeSubmit()}>Submit</Button>
-                <Button className="ui secondary button" onClick={() => this.props.closeModal()}>Cancel</Button>
+                {button}
             </Modal>
         );
     }
@@ -88,6 +111,7 @@ class Event extends React.Component<IEventProps, IEventState> {
 
 const mapDispatchToProps = (dispatch: Function) => ({
     submit: (data: IEvent) => dispatch(eventsAc.submitEvent(data)),
+    delete: (_id: string) => dispatch(eventsAc.deleteEvent(_id)),
 });
 
 export default connect(null, mapDispatchToProps)(Event);

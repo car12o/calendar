@@ -13,11 +13,21 @@ function getEvents() {
 function submitEvent(body: IEvent) {
 	const req = {
 		type: 'SET-EVENTS',
-		url: '/events',
-		method: 'POST',
+		url: body._id === '' ? '/events' : `/events/${body._id}`,
+		method: body._id === '' ? 'POST' : 'PATCH',
 		body: body,
 	};
 	return request(req);
 }
 
-export default { getEvents, submitEvent };
+function deleteEvent(_id: string) {
+	const req = {
+		type: 'SET-EVENTS',
+		url: `/events/${_id}`,
+		method: 'DELETE',
+		body: null,
+	};
+	return request(req);
+}
+
+export default { getEvents, submitEvent, deleteEvent };

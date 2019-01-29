@@ -15,7 +15,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
 		this.state = {
 			modal: {
 				isOpen: false,
-				data: {}
+				data: {},
 			}
 
 		};
@@ -29,10 +29,13 @@ class Home extends React.Component<IHomeProps, IHomeState> {
 	}
 
 	openModal(e: any) {
-		const { start, end } = e;
+		const { _id, title, description, start, end } = e;
 		const modal = {
 			isOpen: true,
 			data: {
+				_id: _id || '',
+				title: title || '',
+				description: description || '',
 				start: new Date(start).toISOString().split('T')[0],
 				end: new Date(end).toISOString().split('T')[0],
 			},
@@ -51,6 +54,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
 					localizer={localizer}
 					events={this.props.events}
 					onSelectSlot={(e) => this.openModal(e)}
+					onSelectEvent={(e) => this.openModal(e)}
 				/>
 				<Modal
 					isOpen={this.state.modal.isOpen}
