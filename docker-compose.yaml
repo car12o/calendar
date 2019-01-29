@@ -1,0 +1,39 @@
+version: '3.1'
+
+services:
+
+### CALENDAR-SERVER ##########################################
+
+  calendar-mongo:
+    image: mongo:4.1.7
+    container_name: calendar-mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./_data/calendar-mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user_example
+      MONGO_INITDB_ROOT_PASSWORD: password_example
+
+  calendar-server:
+    image: node:11.8-alpine
+    container_name: calendar-server
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./calendar-server:/var/www
+    working_dir: /var/www
+    command: sh -c "npm i && npm run dev"
+
+  calendar-client:
+    image: node:11.8-alpine
+    container_name: calendar-client
+    restart: always
+    ports:
+      - 80:3000
+    volumes:
+      - ./calendar-client:/var/www
+    working_dir: /var/www
+    command: sh -c "npm i && npm run start"

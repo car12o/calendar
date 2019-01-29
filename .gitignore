@@ -1,5 +1,5 @@
 .vscode
-docker-compose.yaml
+_data
 
 # server
 calendar-server/dist

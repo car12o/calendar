@@ -27,11 +27,13 @@ class EventsController {
      */
     public static async store(req: Request, res: Response) {
         const { title, description, start, end } = req.body;
+        const endDate = new Date(end);
+        endDate.setHours(endDate.getHours() + 2);
 
         try {
             await new Event({
                 description,
-                end: new Date(end),
+                end: endDate,
                 start: new Date(start),
                 title,
             }).save();
@@ -51,6 +53,12 @@ class EventsController {
      */
     public static async update(req: Request, res: Response) {
         const { id } = req.params;
+        const { body } = req;
+
+        if (body.end) {
+            body.end = new Date(body.end);
+            body.end.setHours(body.end.getHours() + 2);
+        }
 
         try {
             await Event.updateOne(

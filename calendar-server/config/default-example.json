@@ -1,7 +1,7 @@
 {
     "port": 8080,
     "database": {
-      "host": "0.0.0.0",
+      "host": "calendar-mongo",
       "port": 27017,
       "name": "calendar-server",
       "user": "user_example",
