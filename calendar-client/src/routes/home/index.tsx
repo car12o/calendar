@@ -1,25 +1,74 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import './style.css';
+import Modal from '../../components/event'
+import eventsAc from '../../store/actions';
 
-const localizer = BigCalendar.momentLocalizer(moment)
+const localizer = BigCalendar.momentLocalizer(moment);
 
-const Home = () => (
-	<div className="container">
-		<BigCalendar
-			localizer={localizer}
-			events={[{
-				id: 12.5,
-				title: 'Late Same Night Event',
-				start: new Date(2015, 3, 17, 19, 30, 0),
-				end: new Date(2015, 3, 17, 23, 30, 0),
-			}]}
-			startAccessor="start"
-			endAccessor="end"
-		/>
-	</div>
-)
+class Home extends React.Component<IHomeProps, IHomeState> {
+	constructor(props: any) {
+		super(props);
+		this.state = {
+			modal: {
+				isOpen: false,
+				data: {}
+			}
 
-export default Home;
+		};
+		props.getEvents();
+	}
+
+	closeModal() {
+		this.setState({
+			modal: Object.assign({}, this.state.modal, { isOpen: false }),
+		});
+	}
+
+	openModal(e: any) {
+		const { start, end } = e;
+		const modal = {
+			isOpen: true,
+			data: {
+				start: new Date(start).toISOString().split('T')[0],
+				end: new Date(end).toISOString().split('T')[0],
+			},
+		};
+
+		this.setState({
+			modal: Object.assign({}, this.state.modal, modal),
+		});
+	}
+
+	public render() {
+		return (
+			<div className="container">
+				<BigCalendar
+					selectable
+					localizer={localizer}
+					events={this.props.events}
+					onSelectSlot={(e) => this.openModal(e)}
+				/>
+				<Modal
+					isOpen={this.state.modal.isOpen}
+					closeModal={this.closeModal.bind(this)}
+					data={this.state.modal.data}
+				>
+				</Modal>
+			</div>
+		)
+	}
+}
+
+const mapStateToProps = (state: IState) => ({
+	events: state.events,
+})
+
+const mapDispatchToProps = (dispatch: Function) => ({
+	getEvents: () => dispatch(eventsAc.getEvents()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

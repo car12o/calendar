@@ -21,6 +21,6 @@
   },
   "include": [
     "src",
-    "globals.d.ts"
+    "typings/globals.d.ts"
   ]
 }

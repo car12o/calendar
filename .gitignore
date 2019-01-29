@@ -12,11 +12,10 @@ node_modules
 /.pnp
 .pnp.js
 
-# testing
+# client
 calendar-client/coverage
-
-# production
 calendar-client/build
+calendar-client/src/react-app-env.d.ts
 
 npm-debug.log*
 yarn-debug.log*

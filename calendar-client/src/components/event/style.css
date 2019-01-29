@@ -1,0 +1,11 @@
+.input-container, .input-container-flex {
+    margin: 10px 5px;
+}
+
+.input-label {
+    display: block;
+}
+
+.input-element{
+    width: 100%;
+}
