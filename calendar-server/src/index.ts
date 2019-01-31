@@ -3,7 +3,8 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import { database, port } from "../config/default.json";
+import { port } from "../config/default.json";
+import Auth from "./middleware/auth";
 import router from "./router";
 import db from "./services/database";
 import logger from "./services/logging";
@@ -23,9 +24,12 @@ global.log = logger;
 app.use(morgan("dev"));
 
 // // Database ...
-db.connect(database)
+db.connectMongo()
     .then(() => global.log.info("Successfully connected to mongo"))
     .catch((e: Error) => global.log.error(e));
+
+// Middlewares
+app.use(Auth.handleToken);
 
 // Routes ...
 app.use(router);

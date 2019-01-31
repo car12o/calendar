@@ -9,7 +9,10 @@ class EventsController {
      */
     public static async get(req: Request, res: Response) {
         const { id } = req.params;
-        const query = id ? { _id: id } : {};
+        let query = { user: req.session.user._id };
+        if (id) {
+            query = Object.assign({}, query, { _id: id });
+        }
 
         try {
             const result = await Event.find(query);
@@ -36,9 +39,10 @@ class EventsController {
                 end: endDate,
                 start: new Date(start),
                 title,
+                user: req.session.user._id,
             }).save();
 
-            const result = await Event.find({});
+            const result = await Event.find({ user: req.session.user._id });
             return res.send(result);
         } catch (e) {
             global.log.error(e);
@@ -62,11 +66,11 @@ class EventsController {
 
         try {
             await Event.updateOne(
-                { _id: id },
+                { _id: id, user: req.session.user._id },
                 Object.assign({}, req.body, { updatedAt: new Date() })
             );
 
-            const result = await Event.find({});
+            const result = await Event.find({ user: req.session.user._id });
             return res.send(result);
         } catch (e) {
             global.log.error(e);
@@ -83,9 +87,9 @@ class EventsController {
         const { id } = req.params;
 
         try {
-            await Event.deleteOne({ _id: id });
+            await Event.deleteOne({ _id: id, user: req.session.user._id });
 
-            const result = await Event.find({});
+            const result = await Event.find({ user: req.session.user._id });
             return res.send(result);
         } catch (e) {
             global.log.error(e);

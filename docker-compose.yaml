@@ -16,6 +16,15 @@ services:
       MONGO_INITDB_ROOT_USERNAME: user_example
       MONGO_INITDB_ROOT_PASSWORD: password_example
 
+  calendar-redis:
+    image: redis:5.0.3
+    container_name: calendar-redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./_data/calendar-redis:/data
+
   calendar-server:
     image: node:11.8-alpine
     container_name: calendar-server

@@ -1,6 +1,7 @@
 import express from "express";
 import EventsController from "../controllers/events";
 import UsersController from "../controllers/users";
+import Auth from "../middleware/auth";
 
 const router = express.Router();
 const events = express.Router();
@@ -13,13 +14,17 @@ events.post("", EventsController.store);
 events.patch("/:id", EventsController.update);
 events.delete("/:id", EventsController.delete);
 
-// events ...
-users.get("", UsersController.get);
-users.get("/:id", UsersController.get);
+// users ...
+users.get("", Auth.authorization, UsersController.get);
+users.get("/:id", Auth.authorization, UsersController.get);
 users.post("", UsersController.store);
 
+// auth ...
+router.post("/login", UsersController.login);
+router.get("/state", UsersController.state);
+
 // router ...
-router.use("/events", events);
+router.use("/events", Auth.authorization, events);
 router.use("/users", users);
 
 export default router;

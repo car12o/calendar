@@ -3,7 +3,6 @@ _data
 
 # server
 calendar-server/dist
-calendar-server/config/default.json
 calendar-server/logs/*
 !calendar-server/logs/.gitkeep
 

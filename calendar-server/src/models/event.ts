@@ -7,6 +7,7 @@ const Event = new mongoose.Schema({
     start: Date,
     title: String,
     updatedAt: { type: Date, default: new Date() },
-}, { versionKey: false });
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+});
 
 export default mongoose.model("events", Event);
