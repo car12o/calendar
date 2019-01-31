@@ -21,9 +21,9 @@ const user = (state = initialState, action: IAction) => {
 
 			return Object.assign({}, state, {
 				logged: action.body.logged,
-				username: action.body.user.username,
-				password: action.body.user.password,
-				_id: action.body.user._id,
+				username: action.body.user.username || "",
+				password: action.body.user.password || "",
+				_id: action.body.user._id || "",
 			});
 		default:
 			return state;
