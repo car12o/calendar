@@ -17,6 +17,7 @@ class Auth {
         const token = req.get("Token");
         req.session = await new Session().init(token) as ISession;
         res.set("Token", req.session.token);
+        res.set("Access-Control-Expose-Headers", "Content-Type, Token, X-Requested-With");
 
         next();
     }

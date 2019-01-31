@@ -5,7 +5,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import './style.css';
 import Modal from '../../components/event'
-import eventsAc from '../../store/actions';
+import actions from '../../store/actions';
+const { eventsAc } = actions;
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
@@ -48,7 +49,7 @@ class Home extends React.Component<IHomeProps, IHomeState> {
 
 	public render() {
 		return (
-			<div className="container">
+			<div className="home-container">
 				<BigCalendar
 					selectable
 					localizer={localizer}

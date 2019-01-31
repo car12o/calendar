@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { Input, TextArea, Button } from 'semantic-ui-react';
 import './style.css';
-import eventsAc from '../../store/actions';
+import actions from '../../store/actions';
+const { eventsAc } = actions;
 
 Modal.setAppElement('#root');
+
 
 const customStyles = {
     content: {

@@ -6,6 +6,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 30px 100px;
+    height: auto;
 }
 
 .ReactModal__Overlay {

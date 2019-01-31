@@ -34,7 +34,7 @@ class UsersController {
 
             req.session.setLogged(true);
             req.session.setUser(user);
-            return res.send(user);
+            return res.send(req.session);
         } catch (e) {
             global.log.error(e);
             return res.status(500).send(e);

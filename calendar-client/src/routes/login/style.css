@@ -1,0 +1,9 @@
+.login-container {
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+    height: auto;
+    padding: 20px;
+    width: 30%;
+    margin: 0 auto;
+    margin-top: 20%;
+}

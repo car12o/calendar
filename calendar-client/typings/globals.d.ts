@@ -18,6 +18,14 @@ interface IEventProps {
     delete: Function;
 }
 
+interface ILoginProps {
+    user: IUser;
+    setUsername: Function;
+    setPassword: Function;
+    login: Function;
+    register: Function;
+}
+
 interface IEvent {
     _id: string;
     start: string;
@@ -28,6 +36,7 @@ interface IEvent {
 
 interface IState {
     events: [IEvent];
+    user: IUser;
 }
 
 interface IAction {
@@ -35,6 +44,8 @@ interface IAction {
     events?: [IEvent];
     status?: number;
     body?: any;
+    username?: string;
+    password?: string;
 }
 
 interface IRequest {
@@ -42,4 +53,11 @@ interface IRequest {
     method: string;
     body: any;
     type: string;
+}
+
+interface IUser {
+    logged: boolean,
+    _id: string,
+    password: string,
+    username: string,
 }
